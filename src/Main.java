@@ -40,25 +40,27 @@ public class Main {
         boolean isNext;
         isNext = true;
 
+
         printMenu();
         while(true){
             System.out.println("Enter your choice");
             int choice = sc.nextInt();
 
-            switch(choice){
+            switch(choice) {
 
                 case 1:
-                    if(!isNext){
+                    if (!isNext) {
                         itr.next();
                         isNext = true;
                     }
-                    if(itr.hasNext()){
+                    if (itr.hasNext()) {
                         System.out.println("Now playing");
                         System.out.println(itr.next());
-                    }
-                    else System.out.println("You have reached the end of list");
+                    } else System.out.println("You have reached the end of list");
                     break;
-                case 2:
+
+
+                    case 2:
                     if(isNext){
                         itr.previous();
                         isNext = false;
@@ -84,11 +86,15 @@ public class Main {
                     }
                     break;
                 case 4:
-                    if(isNext==true){
+                    if(isNext==true){       //here in delete function if deleting and using play current/next showing concurrent modification exception(modifing
+                                            //object while looping) therefor starting looping again by play() function
                         if(itr.hasPrevious()) {
                             playList.remove(itr.previousIndex());
                             System.out.println("current song deleted");
                             isNext = false;
+                            play(playList);
+
+
 
                         }
                     }
@@ -97,6 +103,8 @@ public class Main {
                             System.out.println(playList.remove(itr.nextIndex()));
                             System.out.println("current song deleted");
                             isNext = true;
+                            play(playList);
+
 
                         }
                     }
