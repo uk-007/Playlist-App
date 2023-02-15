@@ -37,6 +37,8 @@ public class Main {
         System.out.println(itr.next());
 
         Scanner sc = new Scanner(System.in);
+        boolean isNext;
+        isNext = true;
 
         printMenu();
         while(true){
@@ -46,6 +48,10 @@ public class Main {
             switch(choice){
 
                 case 1:
+                    if(!isNext){
+                        itr.next();
+                        isNext = true;
+                    }
                     if(itr.hasNext()){
                         System.out.println("Now playing");
                         System.out.println(itr.next());
@@ -53,6 +59,10 @@ public class Main {
                     else System.out.println("You have reached the end of list");
                     break;
                 case 2:
+                    if(isNext){
+                        itr.previous();
+                        isNext = false;
+                    }
                     if(itr.hasPrevious()){
                         System.out.println("Now playing");
                         System.out.println(itr.previous());
@@ -60,8 +70,36 @@ public class Main {
                     else System.out.println("You are on first song already");
                     break;
                 case 3:
+                    if(isNext==true){
+                        if(itr.hasPrevious()) {
+                            System.out.println(itr.previous());
+                            isNext = false;
+                        }
+                    }
+                    else{
+                        if(itr.hasNext()){
+                            System.out.println(itr.next());
+                            isNext = true;
+                        }
+                    }
                     break;
                 case 4:
+                    if(isNext==true){
+                        if(itr.hasPrevious()) {
+                            playList.remove(itr.previousIndex());
+                            System.out.println("current song deleted");
+                            isNext = false;
+
+                        }
+                    }
+                    else{
+                        if(itr.hasNext()){
+                            System.out.println(playList.remove(itr.nextIndex()));
+                            System.out.println("current song deleted");
+                            isNext = true;
+
+                        }
+                    }
                     break;
                 case 5:
                     printAllSongs(playList);
